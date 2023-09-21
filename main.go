@@ -15,11 +15,11 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
-	"github.com/xperimental/netatmo-exporter/v2/internal/collector"
-	"github.com/xperimental/netatmo-exporter/v2/internal/config"
-	"github.com/xperimental/netatmo-exporter/v2/internal/logger"
-	"github.com/xperimental/netatmo-exporter/v2/internal/token"
-	"github.com/xperimental/netatmo-exporter/v2/internal/web"
+	"github.com/neothematrix/netatmo-exporter/v2/internal/collector"
+	"github.com/neothematrix/netatmo-exporter/v2/internal/config"
+	"github.com/neothematrix/netatmo-exporter/v2/internal/logger"
+	"github.com/neothematrix/netatmo-exporter/v2/internal/token"
+	"github.com/neothematrix/netatmo-exporter/v2/internal/web"
 	"golang.org/x/oauth2"
 )
 

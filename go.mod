@@ -1,4 +1,4 @@
-module github.com/xperimental/netatmo-exporter/v2
+module github.com/neothematrix/netatmo-exporter/v2
 
 go 1.20
 
@@ -26,4 +26,4 @@ require (
 	google.golang.org/protobuf v1.31.0 // indirect
 )
 
-replace github.com/exzz/netatmo-api-go => github.com/neothematrix/netatmo-api-go v0.0.0-20220927234935-2a059c20f221
+replace github.com/exzz/netatmo-api-go => github.com/neothematrix/netatmo-api-go v0.0.0-20230921221849-231408424beb
