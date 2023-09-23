@@ -191,12 +191,11 @@ func (c *NetatmoCollector) Collect(mChan chan<- prometheus.Metric) {
 	c.sendMetric(mChan, cacheTimestampDesc, prometheus.GaugeValue, convertTime(c.cacheTimestamp))
 	if c.cachedData != nil {
 		for _, dev := range c.cachedData.Devices() {
-			homeName := dev.HomeName
 			stationName := dev.StationName //nolint: staticcheck
-			c.collectData(mChan, dev, stationName, homeName)
+			c.collectData(mChan, dev, stationName)
 
 			for _, module := range dev.LinkedModules {
-				c.collectData(mChan, module, stationName, homeName)
+				c.collectData(mChan, module, stationName)
 			}
 		}
 	}
@@ -224,7 +223,7 @@ func (c *NetatmoCollector) RefreshData(now time.Time) {
 	c.cachedData = devices
 }
 
-func (c *NetatmoCollector) collectData(ch chan<- prometheus.Metric, device *netatmo.Device, stationName, homeName string) {
+func (c *NetatmoCollector) collectData(ch chan<- prometheus.Metric, device *netatmo.Device, stationName string) {
 	moduleName := device.ModuleName
 	if moduleName == "" {
 		moduleName = "id-" + device.ID
@@ -244,51 +243,51 @@ func (c *NetatmoCollector) collectData(ch chan<- prometheus.Metric, device *neta
 		return
 	}
 
-	c.sendMetric(ch, updatedDesc, prometheus.GaugeValue, float64(date.UTC().Unix()), moduleName, stationName, homeName)
+	c.sendMetric(ch, updatedDesc, prometheus.GaugeValue, float64(date.UTC().Unix()), moduleName, stationName)
 
 	if data.Temperature != nil {
-		c.sendMetric(ch, tempDesc, prometheus.GaugeValue, float64(*data.Temperature), moduleName, stationName, homeName)
+		c.sendMetric(ch, tempDesc, prometheus.GaugeValue, float64(*data.Temperature), moduleName, stationName)
 	}
 
 	if data.Humidity != nil {
-		c.sendMetric(ch, humidityDesc, prometheus.GaugeValue, float64(*data.Humidity), moduleName, stationName, homeName)
+		c.sendMetric(ch, humidityDesc, prometheus.GaugeValue, float64(*data.Humidity), moduleName, stationName)
 	}
 
 	if data.CO2 != nil {
-		c.sendMetric(ch, cotwoDesc, prometheus.GaugeValue, float64(*data.CO2), moduleName, stationName, homeName)
+		c.sendMetric(ch, cotwoDesc, prometheus.GaugeValue, float64(*data.CO2), moduleName, stationName)
 	}
 
 	if data.Noise != nil {
-		c.sendMetric(ch, noiseDesc, prometheus.GaugeValue, float64(*data.Noise), moduleName, stationName, homeName)
+		c.sendMetric(ch, noiseDesc, prometheus.GaugeValue, float64(*data.Noise), moduleName, stationName)
 	}
 
 	if data.Pressure != nil {
-		c.sendMetric(ch, pressureDesc, prometheus.GaugeValue, float64(*data.Pressure), moduleName, stationName, homeName)
+		c.sendMetric(ch, pressureDesc, prometheus.GaugeValue, float64(*data.Pressure), moduleName, stationName)
 	}
 
 	if data.WindStrength != nil {
-		c.sendMetric(ch, windStrengthDesc, prometheus.GaugeValue, float64(*data.WindStrength), moduleName, stationName, homeName)
+		c.sendMetric(ch, windStrengthDesc, prometheus.GaugeValue, float64(*data.WindStrength), moduleName, stationName)
 	}
 
 	if data.WindAngle != nil {
-		c.sendMetric(ch, windDirectionDesc, prometheus.GaugeValue, float64(*data.WindAngle), moduleName, stationName, homeName)
+		c.sendMetric(ch, windDirectionDesc, prometheus.GaugeValue, float64(*data.WindAngle), moduleName, stationName)
 	}
 
 	if data.Rain != nil {
-		c.sendMetric(ch, rainDesc, prometheus.GaugeValue, float64(*data.Rain), moduleName, stationName, homeName)
+		c.sendMetric(ch, rainDesc, prometheus.GaugeValue, float64(*data.Rain), moduleName, stationName)
 	}
 
 	if device.BatteryPercent != nil {
-		c.sendMetric(ch, batteryDesc, prometheus.GaugeValue, float64(*device.BatteryPercent), moduleName, stationName, homeName)
+		c.sendMetric(ch, batteryDesc, prometheus.GaugeValue, float64(*device.BatteryPercent), moduleName, stationName)
 	}
 	if device.WifiStatus != nil {
-		c.sendMetric(ch, wifiDesc, prometheus.GaugeValue, float64(*device.WifiStatus), moduleName, stationName, homeName)
+		c.sendMetric(ch, wifiDesc, prometheus.GaugeValue, float64(*device.WifiStatus), moduleName, stationName)
 	}
 	if device.RFStatus != nil {
-		c.sendMetric(ch, rfDesc, prometheus.GaugeValue, float64(*device.RFStatus), moduleName, stationName, homeName)
+		c.sendMetric(ch, rfDesc, prometheus.GaugeValue, float64(*device.RFStatus), moduleName, stationName)
 	}
 	if data.HealthIdx != nil {
-		sendMetric(ch, healthIndexDesc, prometheus.GaugeValue, float64(*data.HealthIdx), moduleName, stationName)
+		c.sendMetric(ch, healthIndexDesc, prometheus.GaugeValue, float64(*data.HealthIdx), moduleName, stationName)
 	}
 }
 
