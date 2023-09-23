@@ -37,7 +37,6 @@ var (
 	varLabels = []string{
 		"module",
 		"station",
-		"home",
 	}
 
 	sensorPrefix = prefix + "sensor_"
@@ -112,10 +111,10 @@ var (
 		varLabels,
 		nil)
 	healthIndexDesc = prometheus.NewDesc(
-        prefix+"health_index",
-        "Health index: 0 = Healthy,1 = Fine,2 = Fair,3 = Poor,4 = Unhealthy",
-        varLabels,
-        nil)
+		prefix+"health_index",
+		"Health index: 0 = Healthy,1 = Fine,2 = Fair,3 = Poor,4 = Unhealthy",
+		varLabels,
+		nil)
 )
 
 // ReadFunction defines the interface for reading from the Netatmo API.
