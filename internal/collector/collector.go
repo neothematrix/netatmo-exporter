@@ -39,7 +39,7 @@ var (
 		"station",
 	}
 
-	sensorPrefix = prefix + "sensor_"
+	sensorPrefix = prefix + "aircare_"
 
 	updatedDesc = prometheus.NewDesc(
 		sensorPrefix+"updated",
@@ -111,7 +111,7 @@ var (
 		varLabels,
 		nil)
 	healthIndexDesc = prometheus.NewDesc(
-		prefix+"health_index",
+		sensorPrefix+"health_index",
 		"Health index: 0 = Healthy,1 = Fine,2 = Fair,3 = Poor,4 = Unhealthy",
 		varLabels,
 		nil)
