@@ -110,6 +110,16 @@ var (
 		"RF signal strength (90: lowest, 60: highest)",
 		varLabels,
 		nil)
+	absolutePressureDesc = prometheus.NewDesc(
+		sensorPrefix+"absolute_pressure",
+		"Absolute pressure",
+		varLabels,
+		nil)
+	lastMeasureUtcDesc = prometheus.NewDesc(
+		sensorPrefix+"last_measure_utc",
+		"Measurement time UTC",
+		varLabels,
+		nil)
 	healthIndexDesc = prometheus.NewDesc(
 		sensorPrefix+"health_index",
 		"Health index: 0 = Healthy,1 = Fine,2 = Fair,3 = Poor,4 = Unhealthy",
@@ -165,6 +175,8 @@ func (c *NetatmoCollector) Describe(dChan chan<- *prometheus.Desc) {
 	dChan <- batteryDesc
 	dChan <- wifiDesc
 	dChan <- rfDesc
+	dChan <- absolutePressureDesc
+	dChan <- lastMeasureUtcDesc
 	dChan <- healthIndexDesc
 }
 
@@ -285,8 +297,15 @@ func (c *NetatmoCollector) collectData(ch chan<- prometheus.Metric, device *neta
 	if device.RFStatus != nil {
 		c.sendMetric(ch, rfDesc, prometheus.GaugeValue, float64(*device.RFStatus), moduleName, stationName)
 	}
+
 	if data.HealthIdx != nil {
 		c.sendMetric(ch, healthIndexDesc, prometheus.GaugeValue, float64(*data.HealthIdx), moduleName, stationName)
+	}
+	if data.AbsolutePressure != nil {
+		c.sendMetric(ch, absolutePressureDesc, prometheus.GaugeValue, float64(*data.AbsolutePressure), moduleName, stationName)
+	}
+	if data.LastMeasure != nil {
+		c.sendMetric(ch, lastMeasureUtcDesc, prometheus.GaugeValue, float64(*data.LastMeasure), moduleName, stationName)
 	}
 }
 
